@@ -1,0 +1,19 @@
+[project]
+name = "fotoniq"
+version = "0.1.0"
+description = "This package hosts the codes and tools of the amazing quantum laboratory (U. de Chile).."
+authors = [
+    {name = "Amazing Quantum Team"}
+]
+license = {text = "MIT"}
+requires-python = ">=3.11"
+dependencies = [
+]
+
+
+[tool.poetry]
+packages = [{include = "fotoniq", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
