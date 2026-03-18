@@ -23,7 +23,6 @@ import pandas as pd
 from datetime import datetime, timezone, timedelta
 log = getLogger(__name__)
 
-print("Hello")
 DEFAULT_TZ =ZoneInfo("America/Santiago")
 
 class ExpMonClient(InfluxDBClient):
@@ -163,9 +162,7 @@ If you are running the code on the experiment Windows computer, simply lunch the
 
         for (meas_name, tags), points in query_output.items():
             # -- df is a dataframe with two columns, one is time UTC and the other is {meas_name}
-            df = pd.DataFrame(points).rename(columns={"time":"time UTC", "value":meas_name})
-            print(meas_name, df)
-    
+            df = pd.DataFrame(points).rename(columns={"time":"time UTC", "value":meas_name})    
             df["time UTC"] = pd.to_datetime(df['time UTC'], utc=True).astype(output["time UTC"].dtype)
             output = pd.merge_asof(output,df, on= "time UTC" )
         # Now we fill of NaN where no data where get
