@@ -72,7 +72,7 @@ class ExampleApplication(FotoniQPlotBase):
         # Custom your app
         self.setWindowTitle("Example of an Application.")
         self.setGeometry(100, 100, 1000, 400)
-        self.set_icon("gauss.jpeg")
+        self.set_icon(os.path.join(os.path.dirname(__file__), "gauss.jpeg"))
 
     def setup_user_buttons(self):
         """
@@ -106,12 +106,12 @@ class ExampleApplication(FotoniQPlotBase):
 
 def main(data, metadata, parameters):
     # launch app
-    app = QApplication(sys.argv)
     density_app = ExampleApplication(
         data=data, metadata=metadata, parameters=parameters
     )
     density_app.show()
-    sys.exit(app.exec_())
+    density_app.run()
+    # sys.exit(app.exec_())
 
 
 if __name__ == "__main__":

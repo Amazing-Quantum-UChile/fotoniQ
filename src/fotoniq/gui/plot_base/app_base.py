@@ -41,7 +41,10 @@ import traceback
 
 class FotoniQPlotBase(QMainWindow):
     def __init__(self, model, tab_names, file):
+        ## We must construct a QApplication before a QWidget
+        app = QApplication(sys.argv)
         super().__init__()
+        self._app = app
         self.model = model
         self.tab_names = tab_names
         self._app_file = file
@@ -65,6 +68,8 @@ class FotoniQPlotBase(QMainWindow):
         self._main_widget.addWidget(self.right_widget)
         self.setCentralWidget(self._main_widget)
 
+    def run(self):
+        sys.exit(self._app.exec_())
     ##########################################################################
     ## ------ METHODS THAT ARE WRITTEN TO BE USED BY THE CHILD CLASS ------ ##
     ##########################################################################
@@ -120,15 +125,16 @@ class FotoniQPlotBase(QMainWindow):
             path to the app icon. The default is "atom.png".
         """
         if os.path.exists(icon):
-            self.setWindowIcon(QIcon(icon))
+            self._app.setWindowIcon(QIcon(icon))
             return
         path_to_icon = os.path.join("icons", icon)
         if os.path.exists(path_to_icon):
-            self.setWindowIcon(QIcon(path_to_icon))
+            self._app.setWindowIcon(QIcon(path_to_icon))
             return
         path_to_icon = os.path.join(os.path.dirname(__file__), "icons", icon)
         if os.path.exists(path_to_icon):
-            self.setWindowIcon(QIcon(path_to_icon))
+            icon = QIcon(path_to_icon)
+            self._app.setWindowIcon(icon)
             return
         logger.warning(
             f" Did not found the {icon} you required. Trying to set the default icon. "
