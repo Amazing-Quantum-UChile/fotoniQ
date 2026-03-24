@@ -7,25 +7,6 @@
 # Copyright (c) 2026 - AmazingQuantum@UChile
 # ----------------------------------
 #
-'''
-Content of app_base.py
-
-Please document your code ;-).
-
-'''
-
-# !/usr/bin/env python
-#  -*-mode:Python; coding:utf8 -*-
-
-# ------------------------------------
-# Created on Mo Sep 2023 by Victor Gondret
-# Contact : victor.gondret@institutoptique
-#
-# MIT Copyright (c) 2023 - Helium1@LCF
-# Institut d'Optique Graduate School
-# Université Paris-Saclay
-# ------------------------------------
-#
 """
 Decription of app_base.py 
 
