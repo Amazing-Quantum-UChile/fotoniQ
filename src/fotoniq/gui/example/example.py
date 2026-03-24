@@ -55,20 +55,19 @@ from PyQt5.QtWidgets import (
 from fotoniq.gui.plot_base.app_base import FotoniQPlotBase
 from model import Model
 
-# Configuration des logs quand le programme est appelé localement
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)  #
 
 
 class ExampleApplication(FotoniQPlotBase):
-    def __init__(self, data=[], metadata={}, parameters={}):
+    def __init__(self, data=[], metadata={}, parameters={}, darkstyle=False):
         """
-        Initialisation of the GUIs. Before initialisation of the GUI, we must create
+        Initialisation of the GUIs. Before initialisation of the GUI, we must create the model. 
         """
         # Define the model
         model = Model(data=data, metadata=metadata, parameters=parameters)
         tab_names = ["Gaussian Curve", "Sinc Curve", "Thomas Fermi profile", "Failed"]
-        super().__init__(model=model, tab_names=tab_names, file=__file__)
+        super().__init__(model=model, tab_names=tab_names, file=__file__, darkstyle=darkstyle)
         # Custom your app
         self.setWindowTitle("Example of an Application.")
         self.setGeometry(100, 100, 1000, 400)
@@ -111,7 +110,6 @@ def main(data, metadata, parameters):
     )
     density_app.show()
     density_app.run()
-    # sys.exit(app.exec_())
 
 
 if __name__ == "__main__":

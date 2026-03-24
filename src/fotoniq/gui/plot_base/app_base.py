@@ -13,9 +13,8 @@ Decription of app_base.py
 This class is designd to be the master class of your App. It dialogs with the model you defined, the later being a attribut of your app class and with the FigureClasses you defined in your file figure0, figure1 etc....
 """
 
-
+from fotoniq.gui.base.app import FotoniQAppBase
 from PyQt5.QtWidgets import (
-    QApplication,
     QWidget,
     QLabel,
     QLineEdit,
@@ -23,7 +22,6 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
     QSizePolicy,
-    QMainWindow,
     QScrollArea,
     QSplitter,
     QAction,
@@ -35,17 +33,14 @@ from fotoniq.gui.plot_base.parameter_widget_base import ParameterBaseWidget
 from fotoniq.gui.plot_base.figures_in_tab_widget_base import TabsFigureBase
 from fotoniq.gui.plot_base.default_figure import DefaultFigureClass
 
+
 logger = logging.getLogger(__name__)
 import traceback
 
 
-class FotoniQPlotBase(QMainWindow):
-    def __init__(self, model, tab_names, file):
-        ## We must construct a QApplication before a QWidget
-        app = QApplication(sys.argv)
-        super().__init__()
-        self._app = app
-        self.model = model
+class FotoniQPlotBase(FotoniQAppBase):
+    def __init__(self, model, tab_names, file, **kwargs):
+        super().__init__(model = model,**kwargs) #create the self.model and self._app attributes
         self.tab_names = tab_names
         self._app_file = file
         self._app_dir = os.path.dirname(self._app_file)
@@ -68,8 +63,7 @@ class FotoniQPlotBase(QMainWindow):
         self._main_widget.addWidget(self.right_widget)
         self.setCentralWidget(self._main_widget)
 
-    def run(self):
-        sys.exit(self._app.exec_())
+    
     ##########################################################################
     ## ------ METHODS THAT ARE WRITTEN TO BE USED BY THE CHILD CLASS ------ ##
     ##########################################################################
@@ -115,30 +109,7 @@ class FotoniQPlotBase(QMainWindow):
         """
         self.model = self.parameter_widget.get_parameters_values(self.model)
 
-    def set_icon(self, icon="atom.png"):
-        """
-        Method to be used by the user to set the app icon
-
-        Parameters
-        ----------
-        icon : path or string, optional
-            path to the app icon. The default is "atom.png".
-        """
-        if os.path.exists(icon):
-            self._app.setWindowIcon(QIcon(icon))
-            return
-        path_to_icon = os.path.join("icons", icon)
-        if os.path.exists(path_to_icon):
-            self._app.setWindowIcon(QIcon(path_to_icon))
-            return
-        path_to_icon = os.path.join(os.path.dirname(__file__), "icons", icon)
-        if os.path.exists(path_to_icon):
-            icon = QIcon(path_to_icon)
-            self._app.setWindowIcon(icon)
-            return
-        logger.warning(
-            f" Did not found the {icon} you required. Trying to set the default icon. "
-        )
+   
 
     def save_parameters(self):
         self.model._save_parameters()

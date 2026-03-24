@@ -1,6 +1,6 @@
 import numpy as np
 
-from heliumtools.GUIs.base.parameter_model import GlobalModelForParameters
+from fotoniq.gui.plot_base.parameter_model import GlobalModelForParameters
 
 
 def gaussian(x, mean, amplitude, standard_deviation):
